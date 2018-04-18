@@ -31,8 +31,10 @@ class Basic extends React.Component {
     return (
       <section>
         <div className="dropzone">
-          <Dropzone onDrop={this.onDrop.bind(this)}>
-            <p>Try dropping some files here, or click to select files to upload.</p>
+          <Dropzone
+          accept=".jpeg,.png,.tiff"
+          onDrop={this.onDrop.bind(this)}>
+            <p>Try dropping some files here, or click to select files (.jpg, .png, or .tiff) to upload.</p>
           </Dropzone>
         </div>
         <aside>
