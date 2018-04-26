@@ -11,19 +11,14 @@ class Basic extends React.Component {
     console.log(files.length)
 
     const reader = new FileReader();
-    reader.onload = (event) => {
+    var file = files[0]
+    reader.readAsDataURL(file);
+    reader.onloadend = (event) => {
       file["base64"] = event.target.result;
       this.setState({
         files
       });
-      console.log(this.state);
     };
-
-    // Loop through all uploaded files
-    for(var i=0; i < files.length; i++){
-      var file = files[i]
-      reader.readAsDataURL(file);
-    }
   }
 
 
