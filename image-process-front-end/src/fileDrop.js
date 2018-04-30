@@ -16,7 +16,7 @@ class Basic extends React.Component {
     reader.readAsDataURL(file);
     reader.onloadend = (event) => {
       file["base64"] = event.target.result;
-      file["guid"] = this.createGUID();
+      file["uuid"] = this.createUUID();
       this.setState({
         files
       });
@@ -24,19 +24,23 @@ class Basic extends React.Component {
     };
   }
 
-  createGUID = () => {
-    // CRV using UNIX ts as GUID
-    var ts = (new Date()).getTime();
-    return(ts);
+  createUUID = () => {
+    // CRV solution from: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
 
   uploadBase64 = () => {
     console.log('ready to upload base64');
-    var guid = this.state.files[0]["guid"];
+    var uuid = this.state.files[0]["uuid"];
     var base64String = this.state.files[0]["base64"];
 
-    var postData = {
-      "img_ID": guid,
+    const postData = {
+      "img_ID": uuid,
       "img_metadata" : {
         "hist_eq": [0, 255],
         "contrast": 2,
@@ -46,7 +50,7 @@ class Basic extends React.Component {
       "img_orig": base64String
     };
     console.log(postData);
-    axios.post("http://minerva.colab.duke.edu:5000/send_img", {postData}).then( (response) => {
+    axios.post("http://minerva.colab.duke.edu:5000/send_img", postData).then( (response) => {
 			console.log(response);
 		})
   }
