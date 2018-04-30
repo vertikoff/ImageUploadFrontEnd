@@ -87,7 +87,7 @@ class Basic extends React.Component {
       <section>
         <div className="dropzone">
           <Dropzone
-          accept=".jpg,.png,.tiff"
+          accept=".jpg,.jpeg,.png,.tiff"
           onDrop={this.onDrop.bind(this)}>
             <p>Try dropping some files here, or click to select files (.jpg, .png, or .tiff) to upload.</p>
           </Dropzone>
@@ -96,11 +96,11 @@ class Basic extends React.Component {
           <h2>Dropped files</h2>
           <ul>
             {
-              this.state.files.map(f => <li key={f.name}><img class="uploaded_img" src={f.base64}></img>
+              this.state.files.map(f => <li key={f.name}><img className="uploaded_img" src={f.base64}></img>
                                    <br/>
-                                   <span class="og_file_name">{f.name}</span>
+                                   <span className="og_file_name">{f.name}</span>
                                    <br/>
-                                   <span class="og_file_size">{f.size} bytes</span>
+                                   <span className="og_file_size">{f.size} bytes</span>
                                    <br/>
                                    <button onClick={this.doHistogramEqualization}>Histogram Equalization</button>
                                    <br/>
