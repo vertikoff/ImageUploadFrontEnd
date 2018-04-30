@@ -15,10 +15,17 @@ class Basic extends React.Component {
     reader.readAsDataURL(file);
     reader.onloadend = (event) => {
       file["base64"] = event.target.result;
+      file["guid"] = this.createGUID();
       this.setState({
         files
       });
     };
+  }
+
+  createGUID = () => {
+    // CRV using UNIX ts as GUID
+    var ts = (new Date()).getTime();
+    return(ts);
   }
 
   doHistogramEqualization = () => {
