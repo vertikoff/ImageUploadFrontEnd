@@ -21,6 +21,22 @@ class Basic extends React.Component {
     };
   }
 
+  doHistogramEqualization = () => {
+    alert("Histogram Equalization");
+    console.log(this);
+  }
+
+  doContrastStretching = () => {
+    alert("Contrast Stretching");
+  }
+
+  doLogCompression = () => {
+    alert("Log Compression");
+  }
+
+  doReverseVideo = () => {
+    alert("Reverse Video");
+  }
 
   render() {
     return (
@@ -41,6 +57,15 @@ class Basic extends React.Component {
                                    <span class="og_file_name">{f.name}</span>
                                    <br/>
                                    <span class="og_file_size">{f.size} bytes</span>
+                                   <br/>
+                                   <button onClick={this.doHistogramEqualization}>Histogram Equalization</button>
+                                   <br/>
+                                   <button onClick={this.doContrastStretching}>Contrast Stretching</button>
+                                   <br/>
+                                   <button onClick={this.doLogCompression}>Log Compression</button>
+                                   <br/>
+                                   <button onClick={this.doReverseVideo}>Reverse Video</button>
+
                                    </li>)
             }
           </ul>
