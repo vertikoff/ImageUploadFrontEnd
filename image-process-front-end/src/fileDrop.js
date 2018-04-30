@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone'
+import Dropzone from 'react-dropzone';
+import axios from 'axios';
 
 class Basic extends React.Component {
   constructor() {
@@ -19,6 +20,7 @@ class Basic extends React.Component {
       this.setState({
         files
       });
+      this.uploadBase64();
     };
   }
 
@@ -26,6 +28,27 @@ class Basic extends React.Component {
     // CRV using UNIX ts as GUID
     var ts = (new Date()).getTime();
     return(ts);
+  }
+
+  uploadBase64 = () => {
+    console.log('ready to upload base64');
+    var guid = this.state.files[0]["guid"];
+    var base64String = this.state.files[0]["base64"];
+
+    var postData = {
+      "img_ID": guid,
+      "img_metadata" : {
+        "hist_eq": [0, 255],
+        "contrast": 2,
+        "log_comp": true,
+        "reverse": true
+      },
+      "img_orig": base64String
+    };
+    console.log(postData);
+    axios.post("http://minerva.colab.duke.edu:5000/send_img", {postData}).then( (response) => {
+			console.log(response);
+		})
   }
 
   doHistogramEqualization = () => {
