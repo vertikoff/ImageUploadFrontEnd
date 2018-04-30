@@ -9,7 +9,10 @@ class Basic extends React.Component {
   }
 
   onDrop(files) {
-    console.log(files.length)
+    if (files.length == 0){
+      alert("please select a valid file (.jpg, .png, .tiff)");
+      return(false);
+    }
 
     const reader = new FileReader();
     var file = files[0]
@@ -77,7 +80,7 @@ class Basic extends React.Component {
       <section>
         <div className="dropzone">
           <Dropzone
-          accept=".jpeg,.png,.tiff"
+          accept=".jpg,.png,.tiff"
           onDrop={this.onDrop.bind(this)}>
             <p>Try dropping some files here, or click to select files (.jpg, .png, or .tiff) to upload.</p>
           </Dropzone>
