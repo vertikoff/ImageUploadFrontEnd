@@ -60,7 +60,14 @@ class Basic extends React.Component {
 
   doHistogramEqualization = () => {
     alert("Histogram Equalization");
-    console.log(this);
+    var uuid = this.state.files[0]["uuid"];
+    const postData = {
+      "img_ID": uuid,
+    };
+    console.log(postData);
+    axios.post("http://minerva.colab.duke.edu:5000/view_proc", postData).then( (response) => {
+			console.log(response);
+		})
   }
 
   doContrastStretching = () => {
