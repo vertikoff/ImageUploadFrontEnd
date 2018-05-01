@@ -37,12 +37,16 @@ class Basic extends React.Component {
       return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
 
+  getImageType = (str) => {
+    return(str.replace(/image\//g, ""));
+  }
+
   uploadBase64 = () => {
     console.log('ready to upload base64');
     console.log(this.state.files[0]);
     var uuid = this.state.files[0]["uuid"];
     var base64String = this.state.files[0]["base64"];
-    var imageType = this.stat.files[0]["type"];
+    var imageType = this.getImageType(this.state.files[0]["type"]);
 
     const postData = {
       "img_ID": uuid,
