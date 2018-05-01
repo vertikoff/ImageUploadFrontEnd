@@ -52,7 +52,7 @@ class Basic extends React.Component {
     console.log('ready to upload base64');
     console.log(this.state.files[0]);
     var uuid = this.state.files[0]["uuid"];
-    var base64String = this.state.files[0]["base64"];
+    var base64TrimString = this.state.files[0]["base64Trim"];
     var imageType = this.getImageType(this.state.files[0]["type"]);
 
     const postData = {
@@ -68,7 +68,7 @@ class Basic extends React.Component {
         "reverse": false,
         'format': imageType
       },
-      "img_orig": base64String
+      "img_orig": base64TrimString
     };
 
     console.log(postData);
