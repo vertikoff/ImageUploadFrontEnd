@@ -10,7 +10,7 @@ class Basic extends React.Component {
 
   onDrop(files) {
     if (files.length == 0){
-      alert("please select a valid file (.jpg, .png, .tiff)");
+      alert("please select a valid file (.jpg, .jpeg, .png, .tiff)");
       return(false);
     }
 
@@ -39,19 +39,27 @@ class Basic extends React.Component {
 
   uploadBase64 = () => {
     console.log('ready to upload base64');
+    console.log(this.state.files[0]);
     var uuid = this.state.files[0]["uuid"];
     var base64String = this.state.files[0]["base64"];
+    var imageType = this.stat.files[0]["type"];
 
     const postData = {
       "img_ID": uuid,
+       'do': {'hist_eq': false,
+              'contrast': false,
+              'log_comp': false,
+              'reverse': false},
       "img_metadata" : {
         "hist_eq": [0, 255],
         "contrast": 2,
-        "log_comp": true,
-        "reverse": true
+        "log_comp": false,
+        "reverse": false,
+        'format': imageType
       },
       "img_orig": base64String
     };
+
     console.log(postData);
     axios.post("http://minerva.colab.duke.edu:5000/send_img", postData).then( (response) => {
 			console.log(response);
@@ -89,7 +97,7 @@ class Basic extends React.Component {
           <Dropzone
           accept=".jpg,.jpeg,.png,.tiff"
           onDrop={this.onDrop.bind(this)}>
-            <p>Try dropping some files here, or click to select files (.jpg, .png, or .tiff) to upload.</p>
+            <p>Try dropping some files here, or click to select files (.jpg, .jpeg, .png, or .tiff) to upload.</p>
           </Dropzone>
         </div>
         <aside>
