@@ -19,6 +19,7 @@ class Basic extends React.Component {
     reader.readAsDataURL(file);
     reader.onloadend = (event) => {
       file["base64"] = event.target.result;
+      file["base64Trim"] = this.removeBase64Header(event.target.result);
       file["uuid"] = this.createUUID();
       this.setState({
         files
@@ -39,6 +40,12 @@ class Basic extends React.Component {
 
   getImageType = (str) => {
     return(str.replace(/image\//g, ""));
+  }
+
+  removeBase64Header = (str) => {
+    var needle = 'base64,';
+    var charsToTrim = str.indexOf(needle) + needle.length;
+    return(str.substring(charsToTrim));
   }
 
   uploadBase64 = () => {
