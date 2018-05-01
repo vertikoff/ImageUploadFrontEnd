@@ -24,7 +24,6 @@ class Basic extends React.Component {
       this.setState({
         files
       });
-      this.uploadBase64();
     };
   }
 
@@ -39,7 +38,7 @@ class Basic extends React.Component {
   }
 
   getImageType = (str) => {
-    return(str.replace(/image\//g, ""));
+    return('.' + str.replace(/image\//g, ""));
   }
 
   removeBase64Header = (str) => {
@@ -48,22 +47,23 @@ class Basic extends React.Component {
     return(str.substring(charsToTrim));
   }
 
-  uploadBase64 = () => {
+  doHistogramEqualization = () => {
     console.log('ready to upload base64');
     console.log(this.state.files[0]);
     var uuid = this.state.files[0]["uuid"];
     var base64TrimString = this.state.files[0]["base64Trim"];
     var imageType = this.getImageType(this.state.files[0]["type"]);
+    this.state.files[0]["edited"] = "";
 
     const postData = {
       "img_ID": uuid,
        'do': {'hist_eq': false,
-              'contrast': false,
+              'contrast': true,
               'log_comp': false,
               'reverse': false},
       "img_metadata" : {
-        "hist_eq": [0, 255],
-        "contrast": 2,
+        "hist_eq": 100,
+        "contrast": [30, 100],
         "log_comp": false,
         "reverse": false,
         'format': imageType
@@ -73,19 +73,20 @@ class Basic extends React.Component {
 
     console.log(postData);
     axios.post("http://minerva.colab.duke.edu:5000/send_img", postData).then( (response) => {
-			console.log(response);
+			this.fetchImage()
 		})
   }
 
-  doHistogramEqualization = () => {
-    alert("Histogram Equalization");
+  fetchImage = () => {
     var uuid = this.state.files[0]["uuid"];
     const postData = {
       "img_ID": uuid,
     };
     console.log(postData);
     axios.post("http://minerva.colab.duke.edu:5000/view_proc", postData).then( (response) => {
-			console.log(response);
+      this.state.files[0]["edited"] = 'data:image/png;base64,' + response.data.img_proc;
+      console.log("============ edited base 64 ===========");
+      console.log(this.state.files[0]["edited"]);
 		})
   }
 
@@ -122,6 +123,8 @@ class Basic extends React.Component {
                                    <span className="og_file_size">{f.size} bytes</span>
                                    <br/>
                                    <button onClick={this.doHistogramEqualization}>Histogram Equalization</button>
+                                   <br/>
+                                   <img id="edit1" src=""></img>
                                    <br/>
                                    <button onClick={this.doContrastStretching}>Contrast Stretching</button>
                                    <br/>
