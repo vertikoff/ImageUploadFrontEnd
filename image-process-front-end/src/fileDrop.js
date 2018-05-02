@@ -1,29 +1,108 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone'
+import Dropzone from 'react-dropzone';
+import axios from 'axios';
+import ImageTable from './table.js'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class Basic extends React.Component {
   constructor() {
     super()
-    this.state = { files: [] }
+    this.state = {
+      files: [],
+      tableData: []
+     }
   }
 
   onDrop(files) {
-    console.log(files.length)
+    if (files.length == 0){
+      alert("please select a valid file (.jpg, .jpeg, .png, .tiff)");
+      return(false);
+    }
 
     const reader = new FileReader();
     var file = files[0]
     reader.readAsDataURL(file);
     reader.onloadend = (event) => {
       file["base64"] = event.target.result;
+      file["base64Trim"] = this.removeBase64Header(event.target.result);
+      file["uuid"] = this.createUUID();
       this.setState({
         files
+      });
+      var newTableData = [{
+        "base_64": event.target.result,
+        "description": "Original",
+        "ts_uploaded": "some date",
+        "time_to_process": "N/A",
+        "size": "yuge"
+      }];
+      this.setState({
+        tableData: newTableData
       });
     };
   }
 
+  createUUID = () => {
+    // CRV solution from: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  }
+
+  getImageType = (str) => {
+    return('.' + str.replace(/image\//g, ""));
+  }
+
+  removeBase64Header = (str) => {
+    var needle = 'base64,';
+    var charsToTrim = str.indexOf(needle) + needle.length;
+    return(str.substring(charsToTrim));
+  }
+
   doHistogramEqualization = () => {
-    alert("Histogram Equalization");
-    console.log(this);
+    console.log('ready to upload base64');
+    console.log(this.state.files[0]);
+    var uuid = this.state.files[0]["uuid"];
+    var base64TrimString = this.state.files[0]["base64Trim"];
+    var imageType = this.getImageType(this.state.files[0]["type"]);
+    this.state.files[0]["edited"] = "";
+
+    const postData = {
+      "img_ID": uuid,
+       'do': {'hist_eq': false,
+              'contrast': true,
+              'log_comp': false,
+              'reverse': false},
+      "img_metadata" : {
+        "hist_eq": 100,
+        "contrast": [30, 100],
+        "log_comp": false,
+        "reverse": false,
+        'format': imageType
+      },
+      "img_orig": base64TrimString
+    };
+
+    console.log(postData);
+    axios.post("http://minerva.colab.duke.edu:5000/send_img", postData).then( (response) => {
+			this.fetchImage()
+		})
+  }
+
+  fetchImage = () => {
+    var uuid = this.state.files[0]["uuid"];
+    const postData = {
+      "img_ID": uuid,
+    };
+    console.log(postData);
+    axios.post("http://minerva.colab.duke.edu:5000/view_proc", postData).then( (response) => {
+      this.state.files[0]["edited"] = 'data:image/png;base64,' + response.data.img_proc;
+      console.log("============ edited base 64 ===========");
+      console.log(this.state.files[0]["edited"]);
+		})
   }
 
   doContrastStretching = () => {
@@ -43,22 +122,27 @@ class Basic extends React.Component {
       <section>
         <div className="dropzone">
           <Dropzone
-          accept=".jpeg,.png,.tiff"
+          accept=".jpg,.jpeg,.png,.tiff"
           onDrop={this.onDrop.bind(this)}>
-            <p>Try dropping some files here, or click to select files (.jpg, .png, or .tiff) to upload.</p>
+            <p>Try dropping some files here, or click to select files (.jpg, .jpeg, .png, or .tiff) to upload.</p>
           </Dropzone>
         </div>
+        <MuiThemeProvider>
+          <ImageTable tableData={this.state.tableData} />
+        </MuiThemeProvider>
         <aside>
           <h2>Dropped files</h2>
           <ul>
             {
-              this.state.files.map(f => <li key={f.name}><img class="uploaded_img" src={f.base64}></img>
+              this.state.files.map(f => <li key={f.name}><img className="uploaded_img" src={f.base64}></img>
                                    <br/>
-                                   <span class="og_file_name">{f.name}</span>
+                                   <span className="og_file_name">{f.name}</span>
                                    <br/>
-                                   <span class="og_file_size">{f.size} bytes</span>
+                                   <span className="og_file_size">{f.size} bytes</span>
                                    <br/>
                                    <button onClick={this.doHistogramEqualization}>Histogram Equalization</button>
+                                   <br/>
+                                   <img id="edit1" src=""></img>
                                    <br/>
                                    <button onClick={this.doContrastStretching}>Contrast Stretching</button>
                                    <br/>
