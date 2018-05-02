@@ -22,6 +22,7 @@ class Basic extends React.Component {
 
     const reader = new FileReader();
     var file = files[0]
+    console.log(file);
     reader.readAsDataURL(file);
     reader.onloadend = (event) => {
       file["base64"] = event.target.result;
@@ -37,7 +38,7 @@ class Basic extends React.Component {
         "description": "Original",
         "ts_uploaded": "some date",
         "time_to_process": "N/A",
-        "size": "yuge"
+        "size": file.size
       }];
       this.setState({
         tableData: newTableData

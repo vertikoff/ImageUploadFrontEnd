@@ -44,7 +44,7 @@ class ImageTable extends React.Component {
             <TableHeaderColumn>Description</TableHeaderColumn>
             <TableHeaderColumn>Uploaded</TableHeaderColumn>
             <TableHeaderColumn>Time to Process</TableHeaderColumn>
-            <TableHeaderColumn>Size</TableHeaderColumn>
+            <TableHeaderColumn>Size (bytes)</TableHeaderColumn>
             <TableHeaderColumn>Download</TableHeaderColumn>
           </TableRow>
         </TableHeader>
