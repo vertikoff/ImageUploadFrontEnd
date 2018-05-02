@@ -102,6 +102,7 @@ class Basic extends React.Component {
   doProcessing = (dataPayload, action) => {
     console.log(dataPayload);
     axios.post("http://minerva.colab.duke.edu:5000/send_img", dataPayload).then( (response) => {
+      console.log(response);
       var newTableData = {
         "base_64": this.createBase64Header(response.data.img_metadata.format) + response.data.img_proc,
         "description": action,
@@ -113,6 +114,10 @@ class Basic extends React.Component {
 
       this.addImageToTable(newTableData)
 		})
+    .catch(function (error) {
+      console.error("======= axios error =============");
+      alert("There was an issue processing your image. Please try again.");
+    });
   }
 
   doHistogramEqualization = () => {
