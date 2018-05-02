@@ -65,6 +65,11 @@ class Basic extends React.Component {
     };
   }
 
+  getTSHumanReadable = (dateobj) => {
+    var ts = new Date(dateobj);
+    return(ts.toUTCString());
+  }
+
   getCurrentTSHumanReadable = () => {
     var ts = new Date();
     return(ts.toUTCString());
@@ -106,7 +111,7 @@ class Basic extends React.Component {
       var newTableData = {
         "base_64": this.createBase64Header(response.data.img_metadata.format) + response.data.img_proc,
         "description": action,
-        "ts_uploaded": response.data.img_metadata.time,
+        "ts_uploaded": this.getTSHumanReadable(response.data.img_metadata.time),
         "time_to_process": response.data.img_metadata.proc_time,
         "size": response.data.img_metadata.img_size[0] + ' x ' + response.data.img_metadata.img_size[1],
         "type": this.getImageType(response.data.img_metadata.format)
