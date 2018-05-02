@@ -54,4 +54,4 @@ All images displayed (both original and processed) can be downloaded to your loc
 You can see this project in action [here](https://www.youtube.com/watch?v=XBfCQs_Pox0&feature=youtu.be).
 
 ## Note
-When running the image processing project on Duke's VMs, we've seen high latency. You may experience failed requests do to this issue. This frontend client will alert the user anytime a network requests fails and prompt the user to retry.
+When running the image processing project on Duke's VMs, we've seen high latency. You may experience failed requests due to this issue. This frontend client will alert the user anytime a network requests fails and prompt the user to retry.
