@@ -126,7 +126,7 @@ class Basic extends React.Component {
               'log_comp': true,
               'reverse': false},
       "img_metadata" : {
-        "hist_eq": 1,
+        "hist_eq": true,
         "contrast": [30, 100],
         "log_comp": true,
         "reverse": false,
@@ -138,6 +138,9 @@ class Basic extends React.Component {
   }
 
   doContrastStretching = () => {
+    var min = parseInt(prompt("start range (min = 0)", 0));
+    var max = parseInt(prompt("end range (min = " + min + ". max = 100)", 100));
+    console.log("min: " + min + '. max: ' + max);
     var uuid = this.createUUID();
     var base64TrimString = this.state.files[0]["base64Trim"];
     var imageType = this.getImageType(this.state.files[0]["type"], true);
@@ -148,8 +151,8 @@ class Basic extends React.Component {
               'log_comp': false,
               'reverse': false},
       "img_metadata" : {
-        "hist_eq": 100,
-        "contrast": [30, 100],
+        "hist_eq": false,
+        "contrast": [min, max],
         "log_comp": false,
         "reverse": false,
         'format': imageType
@@ -176,7 +179,7 @@ class Basic extends React.Component {
               'log_comp': true,
               'reverse': false},
       "img_metadata" : {
-        "hist_eq": 100,
+        "hist_eq": false,
         "contrast": [30, 100],
         "log_comp": true,
         "reverse": false,
@@ -198,7 +201,7 @@ class Basic extends React.Component {
               'log_comp': false,
               'reverse': true},
       "img_metadata" : {
-        "hist_eq": 100,
+        "hist_eq": false,
         "contrast": [30, 100],
         "log_comp": false,
         "reverse": true,
