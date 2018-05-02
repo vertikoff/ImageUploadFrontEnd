@@ -173,7 +173,25 @@ class Basic extends React.Component {
   }
 
   doLogCompression = () => {
-    alert("Log Compression");
+    var uuid = this.createUUID();
+    var base64TrimString = this.state.files[0]["base64Trim"];
+    var imageType = this.getImageType(this.state.files[0]["type"], true);
+    const postData = {
+      "img_ID": uuid,
+       'do': {'hist_eq': false,
+              'contrast': false,
+              'log_comp': true,
+              'reverse': false},
+      "img_metadata" : {
+        "hist_eq": 100,
+        "contrast": [30, 100],
+        "log_comp": true,
+        "reverse": false,
+        'format': imageType
+      },
+      "img_orig": base64TrimString
+    };
+    this.doProcessing(postData, "Log Compression");
   }
 
   doReverseVideo = () => {
