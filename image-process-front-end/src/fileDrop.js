@@ -142,10 +142,10 @@ class Basic extends React.Component {
 
         {this.state.showImageUploadUI ? null :
           <div>
-            <button onClick={this.doHistogramEqualization}>Histogram Equalization</button>
-            <button onClick={this.doContrastStretching}>Contrast Stretching</button>
-            <button onClick={this.doLogCompression}>Log Compression</button>
-            <button onClick={this.reloadPage}>Upload New Image</button>
+            <button onClick={this.doHistogramEqualization} className="standard-btn">Histogram Equalization</button>
+            <button onClick={this.doContrastStretching} className="standard-btn">Contrast Stretching</button>
+            <button onClick={this.doLogCompression} className="standard-btn">Log Compression</button>
+            <button onClick={this.reloadPage} className="standard-btn revert-btn">Upload New Image</button>
           </div>
         }
         {this.state.showImageUploadUI ? <div className="dropzone">

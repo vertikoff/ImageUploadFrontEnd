@@ -34,7 +34,7 @@ class ImageTable extends React.Component {
             <TableRowColumn>{this.props.tableData[i]["time_to_process"]}</TableRowColumn>
             <TableRowColumn>{this.props.tableData[i]["size"]}</TableRowColumn>
             <TableRowColumn>{this.props.tableData[i]["type"]}</TableRowColumn>
-            <TableRowColumn><button value={this.props.tableData[i]["base_64"]} onClick={this.downloadImage.bind(this, this.props.tableData[i]["base_64"])}>Download</button></TableRowColumn>
+            <TableRowColumn><button value={this.props.tableData[i]["base_64"]} onClick={this.downloadImage.bind(this, this.props.tableData[i]["base_64"])} className="standard-btn">Download</button></TableRowColumn>
           </TableRow>
         )
       }
