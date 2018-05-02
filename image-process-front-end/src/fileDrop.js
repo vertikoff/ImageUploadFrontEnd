@@ -42,7 +42,7 @@ class Basic extends React.Component {
         "ts_uploaded": this.getCurrentTSHumanReadable(),
         "time_to_process": "N/A",
         "size": file.size,
-        "type": this.getImageType(file.type)
+        "type": this.getImageType(file.type, true)
       };
 
       this.addImageToTable(newTableData)
@@ -68,8 +68,12 @@ class Basic extends React.Component {
       return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
 
-  getImageType = (str) => {
-    return('.' + str.replace(/image\//g, ""));
+  getImageType = (str, optionalAddPeriod) => {
+    var prefix = '';
+    if(optionalAddPeriod){
+      prefix = '.';
+    }
+    return(prefix + str.replace(/image\//g, ""));
   }
 
   removeBase64Header = (str) => {
@@ -88,7 +92,7 @@ class Basic extends React.Component {
     console.log(this.state.files[0]);
     var uuid = this.state.files[0]["uuid"];
     var base64TrimString = this.state.files[0]["base64Trim"];
-    var imageType = this.getImageType(this.state.files[0]["type"]);
+    var imageType = this.getImageType(this.state.files[0]["type"], true);
     this.state.files[0]["edited"] = "";
 
     const postData = {
@@ -136,7 +140,7 @@ class Basic extends React.Component {
   doContrastStretching = () => {
     var uuid = this.createUUID();
     var base64TrimString = this.state.files[0]["base64Trim"];
-    var imageType = this.getImageType(this.state.files[0]["type"]);
+    var imageType = this.getImageType(this.state.files[0]["type"], true);
     const postData = {
       "img_ID": uuid,
        'do': {'hist_eq': false,
