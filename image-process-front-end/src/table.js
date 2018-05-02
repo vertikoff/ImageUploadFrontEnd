@@ -15,6 +15,10 @@ class ImageTable extends React.Component {
 
   }
 
+  downloadImage = (base64, e) => {
+    var url = base64.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+    window.open(url);
+  }
   render() {
 
     var prettyTableData = [];
@@ -30,7 +34,7 @@ class ImageTable extends React.Component {
             <TableRowColumn>{this.props.tableData[i]["time_to_process"]}</TableRowColumn>
             <TableRowColumn>{this.props.tableData[i]["size"]}</TableRowColumn>
             <TableRowColumn>{this.props.tableData[i]["type"]}</TableRowColumn>
-            <TableRowColumn><button>Download</button></TableRowColumn>
+            <TableRowColumn><button value={this.props.tableData[i]["base_64"]} onClick={this.downloadImage.bind(this, this.props.tableData[i]["base_64"])}>Download</button></TableRowColumn>
           </TableRow>
         )
       }
