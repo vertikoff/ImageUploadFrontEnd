@@ -152,7 +152,8 @@ class Basic extends React.Component {
           <Dropzone
           accept=".jpg,.jpeg,.png,.tiff"
           onDrop={this.onDrop.bind(this)}>
-            <p>Try dropping some files here, or click to select files (.jpg, .jpeg, .png, or .tiff) to upload.</p>
+            <p>Drop a file here, or click to select file to upload.</p>
+            <b>required:<br/>(.jpg, .jpeg, .png, or .tiff)</b>
           </Dropzone>
         </div> : null }
         {this.state.showImageUploadUI ? null :

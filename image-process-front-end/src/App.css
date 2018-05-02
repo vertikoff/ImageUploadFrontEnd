@@ -24,6 +24,13 @@
 .uploaded_img{
   max-height: 300px;
 }
+.dropzone > div{
+  margin: auto;
+  margin-top: 20px;
+}
+.dropzone > div:hover{
+  cursor: pointer;
+}
 
 td{
   word-wrap: break-word;
