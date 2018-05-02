@@ -51,6 +51,9 @@
 .revert-btn:hover{
   background: #ff1a1a;
 }
+td > img{
+  max-width: 100%
+}
 
 td{
   word-wrap: break-word;
