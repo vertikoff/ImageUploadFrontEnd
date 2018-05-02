@@ -22,7 +22,13 @@
   font-size: large;
 }
 .uploaded_img{
-  max-height: 300px; 
+  max-height: 300px;
+}
+
+td{
+  word-wrap: break-word;
+  text-overflow: inherit !important;
+  white-space: normal !important;
 }
 
 @keyframes App-logo-spin {

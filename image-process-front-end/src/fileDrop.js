@@ -36,7 +36,7 @@ class Basic extends React.Component {
       var newTableData = [{
         "base_64": event.target.result,
         "description": "Original",
-        "ts_uploaded": "some date",
+        "ts_uploaded": this.getCurrentTSHumanReadable(),
         "time_to_process": "N/A",
         "size": file.size,
         "type": this.getImageType(file.type)
@@ -52,6 +52,10 @@ class Basic extends React.Component {
     };
   }
 
+  getCurrentTSHumanReadable = () => {
+    var ts = new Date();
+    return(ts.toUTCString());
+  }
   createUUID = () => {
     // CRV solution from: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
     function s4() {
