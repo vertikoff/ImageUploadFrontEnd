@@ -13,28 +13,28 @@ To run this React app, simply run the following command from the root level of t
 2) `npm run start`
 
 ## Supported filetypes
-`.jpg`, `.jpeg`, `.png`, `.tiff` are the supported file types. 
+`.jpg`, `.jpeg`, `.png`, `.tiff` are the supported file types.
 
-Both color and grayscale images are supported. 
+Both color and grayscale images are supported.
 
-At this time, mulitple image upload is **NOT** supported. If the user selects multiple images to upload, they will see a warning and only the first image will be uploaded and displayed in the client. 
+At this time, mulitple image upload is **NOT** supported. If the user selects multiple images to upload, they will see a warning and only the first image will be uploaded and displayed in the client.
 
 ## Uploading images
-To upload an image, simply click the dropzone or drag an image onto the dropzone: 
+To upload an image, simply click the dropzone or drag an image onto the dropzone:
 
 ![upload](readme_assets/upload.png)
 
 
-You can also upload a new image at any time by clicking on the `Upload New Image` button: 
+You can also upload a new image at any time by clicking on the `Upload New Image` button:
 
 ![new_upload](readme_assets/new_upload.png)
 
 ## Processing images
-Once you've uploaded an image from your local machine, you can select any of the processes listed above to perform. For Contrast Stretching, you'll be prompted for a range `[min, max]`: 
+Once you've uploaded an image from your local machine, you can select any of the processes listed above to perform. For Contrast Stretching, you'll be prompted for a range `[min, max]`:
 
 ![end_range](readme_assets/end_range.png)
 
-Once an image process has completed, the result will be displayed along with the original image and any other processes you have completed: 
+Once an image process has completed, the result will be displayed along with the original image and any other processes you have completed:
 
 ![processed](readme_assets/processed.png)
 
@@ -46,9 +46,12 @@ Images are dispalyed with:
 * File type - file type of the image
 
 ## Downloading images
-All images displayed (both original and processed) can be downloaded to your local machine. Simply click on the Download button next to each image: 
+All images displayed (both original and processed) can be downloaded to your local machine. Simply click on the Download button next to each image:
 
 ![download](readme_assets/download.png)
 
 ## Demo
-You can see this project in action [here](https://www.youtube.com/watch?v=XBfCQs_Pox0&feature=youtu.be). 
+You can see this project in action [here](https://www.youtube.com/watch?v=XBfCQs_Pox0&feature=youtu.be).
+
+## Note
+When running the image processing project on Duke's VMs, we've seen high latency. You may experience failed requests do to this issue. This frontend client will alert the user anytime a network requests fails and prompt the user to retry.
