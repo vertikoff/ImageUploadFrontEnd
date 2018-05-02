@@ -189,7 +189,8 @@ class Basic extends React.Component {
       },
       "img_orig": base64TrimString
     };
-    this.doProcessing(postData, "Contrast Stretching");
+    var actionString = "Contrast Stretching [" + min + ", " + max + "]";
+    this.doProcessing(postData, actionString);
   }
 
   addImageToTable = (imageObject) => {
