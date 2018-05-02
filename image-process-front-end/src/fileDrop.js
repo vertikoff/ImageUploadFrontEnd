@@ -120,6 +120,10 @@ class Basic extends React.Component {
   render() {
     return (
       <section>
+        <button onClick={this.doHistogramEqualization}>Histogram Equalization</button>
+        <button onClick={this.doContrastStretching}>Contrast Stretching</button>
+        <button onClick={this.doLogCompression}>Log Compression</button>
+        <button onClick={this.doReverseVideo}>Reverse Video</button>
         <div className="dropzone">
           <Dropzone
           accept=".jpg,.jpeg,.png,.tiff"
@@ -130,31 +134,30 @@ class Basic extends React.Component {
         <MuiThemeProvider>
           <ImageTable tableData={this.state.tableData} />
         </MuiThemeProvider>
-        <aside>
-          <h2>Dropped files</h2>
-          <ul>
-            {
-              this.state.files.map(f => <li key={f.name}><img className="uploaded_img" src={f.base64}></img>
-                                   <br/>
-                                   <span className="og_file_name">{f.name}</span>
-                                   <br/>
-                                   <span className="og_file_size">{f.size} bytes</span>
-                                   <br/>
-                                   <button onClick={this.doHistogramEqualization}>Histogram Equalization</button>
-                                   <br/>
-                                   <img id="edit1" src=""></img>
-                                   <br/>
-                                   <button onClick={this.doContrastStretching}>Contrast Stretching</button>
-                                   <br/>
-                                   <button onClick={this.doLogCompression}>Log Compression</button>
-                                   <br/>
-                                   <button onClick={this.doReverseVideo}>Reverse Video</button>
+        </section>
+        // <aside>
+        //   <ul>
+        //     {
+        //       this.state.files.map(f => <li key={f.name}><img className="uploaded_img" src={f.base64}></img>
+        //                            <br/>
+        //                            <span className="og_file_name">{f.name}</span>
+        //                            <br/>
+        //                            <span className="og_file_size">{f.size} bytes</span>
+        //                            <br/>
+        //
+        //                            <br/>
+        //                            <img id="edit1" src=""></img>
+        //                            <br/>
+        //
+        //                            <br/>
+        //
+        //                            <br/>
+        //
+        //                            </li>)
+        //     }
+        //   </ul>
+        // </aside>
 
-                                   </li>)
-            }
-          </ul>
-        </aside>
-      </section>
     );
   }
 }
