@@ -131,11 +131,17 @@ class Basic extends React.Component {
   render() {
     return (
       <section>
-        <button onClick={this.doHistogramEqualization}>Histogram Equalization</button>
-        <button onClick={this.doContrastStretching}>Contrast Stretching</button>
-        <button onClick={this.doLogCompression}>Log Compression</button>
-        <button onClick={this.doReverseVideo}>Reverse Video</button>
-        {this.state.showImageUploadUI ? null : <button onClick={this.reloadPage}>Upload New Image</button>}
+
+
+
+        {this.state.showImageUploadUI ? null :
+          <div>
+            <button onClick={this.doHistogramEqualization}>Histogram Equalization</button>
+            <button onClick={this.doContrastStretching}>Contrast Stretching</button>
+            <button onClick={this.doLogCompression}>Log Compression</button>
+            <button onClick={this.reloadPage}>Upload New Image</button>
+          </div>
+        }
         {this.state.showImageUploadUI ? <div className="dropzone">
           <Dropzone
           accept=".jpg,.jpeg,.png,.tiff"
@@ -143,10 +149,11 @@ class Basic extends React.Component {
             <p>Try dropping some files here, or click to select files (.jpg, .jpeg, .png, or .tiff) to upload.</p>
           </Dropzone>
         </div> : null }
-
-        <MuiThemeProvider>
-          <ImageTable tableData={this.state.tableData} />
-        </MuiThemeProvider>
+        {this.state.showImageUploadUI ? null :
+          <MuiThemeProvider>
+            <ImageTable tableData={this.state.tableData} />
+          </MuiThemeProvider>
+        }
         </section>
         // <aside>
         //   <ul>
