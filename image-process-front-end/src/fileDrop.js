@@ -19,6 +19,9 @@ class Basic extends React.Component {
       alert("please select a valid file (.jpg, .jpeg, .png, .tiff)");
       return(false);
     }
+    if(files.length > 1){
+      alert("note: multiple file upload not supported. Only the first image selected has been uploaded.");
+    }
 
     const reader = new FileReader();
     var file = files[0]
@@ -175,6 +178,7 @@ class Basic extends React.Component {
         {this.state.showImageUploadUI ? <div className="dropzone">
           <Dropzone
           accept=".jpg,.jpeg,.png,.tiff"
+          multiple="false"
           onDrop={this.onDrop.bind(this)}>
             <p>Drop a file here, or click to select file to upload.</p>
             <b>required:<br/>(.jpg, .jpeg, .png, or .tiff)</b>
