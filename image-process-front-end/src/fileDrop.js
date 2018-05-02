@@ -137,9 +137,29 @@ class Basic extends React.Component {
     this.doProcessing(postData, "Histogram Equalization");
   }
 
+  isContrastValueValid = (value, min, max) => {
+    if(!Number.isInteger(value)){
+      return(false);
+    }
+    if(min <= value && value <= max){
+      return(true)
+    } else {
+      return(false)
+    }
+  }
+
   doContrastStretching = () => {
     var min = parseInt(prompt("start range (min = 0)", 0));
+    if(!this.isContrastValueValid(min, 0, 100)){
+      alert("Invalid Contrast Start Range. Value must be integer between 0 and 100.");
+      return(false);
+    }
     var max = parseInt(prompt("end range (min = " + min + ". max = 100)", 100));
+    if(!this.isContrastValueValid(max, min, 100)){
+      alert("Invalid Contrast End Range. Value must be integer between your entered minimum (" + min + ") and 100.");
+      return(false);
+    }
+
     console.log("min: " + min + '. max: ' + max);
     var uuid = this.createUUID();
     var base64TrimString = this.state.files[0]["base64Trim"];
