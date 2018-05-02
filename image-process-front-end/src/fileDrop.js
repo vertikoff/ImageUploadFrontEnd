@@ -87,35 +87,6 @@ class Basic extends React.Component {
       return('data:image/' + fileType + ';base64,');
   }
 
-  doHistogramEqualization = () => {
-    console.log('ready to upload base64');
-    console.log(this.state.files[0]);
-    var uuid = this.state.files[0]["uuid"];
-    var base64TrimString = this.state.files[0]["base64Trim"];
-    var imageType = this.getImageType(this.state.files[0]["type"], true);
-    this.state.files[0]["edited"] = "";
-
-    const postData = {
-      "img_ID": uuid,
-       'do': {'hist_eq': false,
-              'contrast': true,
-              'log_comp': false,
-              'reverse': false},
-      "img_metadata" : {
-        "hist_eq": 100,
-        "contrast": [30, 100],
-        "log_comp": false,
-        "reverse": false,
-        'format': imageType
-      },
-      "img_orig": base64TrimString
-    };
-
-    console.log(postData);
-    axios.post("http://minerva.colab.duke.edu:5000/send_img", postData).then( (response) => {
-			this.fetchImage()
-		})
-  }
 
   doProcessing = (dataPayload, action) => {
     console.log(dataPayload);
@@ -142,6 +113,28 @@ class Basic extends React.Component {
 
       this.addImageToTable(newTableData)
 		})
+  }
+
+  doHistogramEqualization = () => {
+    var uuid = this.createUUID();
+    var base64TrimString = this.state.files[0]["base64Trim"];
+    var imageType = this.getImageType(this.state.files[0]["type"], true);
+    const postData = {
+      "img_ID": uuid,
+       'do': {'hist_eq': true,
+              'contrast': false,
+              'log_comp': true,
+              'reverse': false},
+      "img_metadata" : {
+        "hist_eq": 1,
+        "contrast": [30, 100],
+        "log_comp": true,
+        "reverse": false,
+        'format': imageType
+      },
+      "img_orig": base64TrimString
+    };
+    this.doProcessing(postData, "Histogram Equalization");
   }
 
   doContrastStretching = () => {
