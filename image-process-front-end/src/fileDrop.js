@@ -117,6 +117,13 @@ class Basic extends React.Component {
 		})
   }
 
+  doProcessing = (dataPayload, action) => {
+    console.log(dataPayload);
+    axios.post("http://minerva.colab.duke.edu:5000/send_img", dataPayload).then( (response) => {
+			this.fetchImage(dataPayload.img_ID, action);
+		})
+  }
+
   fetchImage = (uuid, action) => {
     const postData = {
       "img_ID": uuid,
@@ -156,11 +163,7 @@ class Basic extends React.Component {
       },
       "img_orig": base64TrimString
     };
-
-    console.log(postData);
-    axios.post("http://minerva.colab.duke.edu:5000/send_img", postData).then( (response) => {
-			this.fetchImage(uuid, "contrast stretching");
-		})
+    this.doProcessing(postData, "Contrast Stretching");
   }
 
   addImageToTable = (imageObject) => {
@@ -191,6 +194,7 @@ class Basic extends React.Component {
             <button onClick={this.doHistogramEqualization} className="standard-btn">Histogram Equalization</button>
             <button onClick={this.doContrastStretching} className="standard-btn">Contrast Stretching</button>
             <button onClick={this.doLogCompression} className="standard-btn">Log Compression</button>
+            <button onClick={this.doReverseVideo} className="standard-btn">Reverse Video</button>
             <button onClick={this.reloadPage} className="standard-btn revert-btn">Upload New Image</button>
           </div>
         }
