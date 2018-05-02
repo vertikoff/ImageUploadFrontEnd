@@ -12,9 +12,15 @@ import {
 class ImageTable extends React.Component {
   constructor() {
     super();
-
+    this.state = {
+      selectable: false
+    }
   }
 
+  downloadImage = (base64, e) => {
+    var url = base64.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+    window.open(url);
+  }
   render() {
 
     var prettyTableData = [];
@@ -29,7 +35,8 @@ class ImageTable extends React.Component {
             <TableRowColumn>{this.props.tableData[i]["ts_uploaded"]}</TableRowColumn>
             <TableRowColumn>{this.props.tableData[i]["time_to_process"]}</TableRowColumn>
             <TableRowColumn>{this.props.tableData[i]["size"]}</TableRowColumn>
-            <TableRowColumn><button>Download</button></TableRowColumn>
+            <TableRowColumn>{this.props.tableData[i]["type"]}</TableRowColumn>
+            <TableRowColumn><button value={this.props.tableData[i]["base_64"]} onClick={this.downloadImage.bind(this, this.props.tableData[i]["base_64"])} className="standard-btn">Download</button></TableRowColumn>
           </TableRow>
         )
       }
@@ -37,18 +44,19 @@ class ImageTable extends React.Component {
 
     return (
       <div>
-      <Table>
-        <TableHeader>
+      <Table selectable={this.state.selectable}>
+        <TableHeader displaySelectAll={this.state.selectable} adjustForCheckbox={this.state.selectable}>
           <TableRow>
             <TableHeaderColumn>Image</TableHeaderColumn>
             <TableHeaderColumn>Description</TableHeaderColumn>
             <TableHeaderColumn>Uploaded</TableHeaderColumn>
             <TableHeaderColumn>Time to Process</TableHeaderColumn>
-            <TableHeaderColumn>Size</TableHeaderColumn>
+            <TableHeaderColumn>Size (bytes)</TableHeaderColumn>
+            <TableHeaderColumn>File Type</TableHeaderColumn>
             <TableHeaderColumn>Download</TableHeaderColumn>
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody displayRowCheckbox={this.state.selectable}>
           {prettyTableData}
         </TableBody>
       </Table>

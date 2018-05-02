@@ -22,7 +22,40 @@
   font-size: large;
 }
 .uploaded_img{
-  max-height: 300px; 
+  max-height: 300px;
+}
+.dropzone > div{
+  margin: auto;
+  margin-top: 20px;
+}
+.dropzone > div:hover{
+  cursor: pointer;
+}
+
+.standard-btn{
+  margin: 20px;
+  padding: 10px;
+  font-size: 15px;
+  border:none;
+  background: #00b5ad;
+  color: white;
+}
+.standard-btn:hover{
+  cursor: pointer;
+  background: #005855;
+}
+
+.revert-btn{
+  background: #ff5d5d;
+}
+.revert-btn:hover{
+  background: #ff1a1a;
+}
+
+td{
+  word-wrap: break-word;
+  text-overflow: inherit !important;
+  white-space: normal !important;
 }
 
 @keyframes App-logo-spin {

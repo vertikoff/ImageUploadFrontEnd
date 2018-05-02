@@ -9,7 +9,8 @@ class Basic extends React.Component {
     super()
     this.state = {
       files: [],
-      tableData: []
+      tableData: [],
+      showImageUploadUI: true
      }
   }
 
@@ -21,27 +22,40 @@ class Basic extends React.Component {
 
     const reader = new FileReader();
     var file = files[0]
+    console.log(file);
     reader.readAsDataURL(file);
     reader.onloadend = (event) => {
       file["base64"] = event.target.result;
       file["base64Trim"] = this.removeBase64Header(event.target.result);
       file["uuid"] = this.createUUID();
       this.setState({
-        files
+        files: files
       });
+
+      // CRV update the data to display in the results table
       var newTableData = [{
         "base_64": event.target.result,
         "description": "Original",
-        "ts_uploaded": "some date",
+        "ts_uploaded": this.getCurrentTSHumanReadable(),
         "time_to_process": "N/A",
-        "size": "yuge"
+        "size": file.size,
+        "type": this.getImageType(file.type)
       }];
       this.setState({
         tableData: newTableData
       });
+
+      // CRV toggle the retry button and the image upload UI
+      this.setState({
+        showImageUploadUI: false
+      })
     };
   }
 
+  getCurrentTSHumanReadable = () => {
+    var ts = new Date();
+    return(ts.toUTCString());
+  }
   createUUID = () => {
     // CRV solution from: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
     function s4() {
@@ -116,45 +130,61 @@ class Basic extends React.Component {
   doReverseVideo = () => {
     alert("Reverse Video");
   }
+  reloadPage = () => {
+    window.location.reload();
+  }
 
   render() {
     return (
       <section>
-        <div className="dropzone">
+
+
+
+        {this.state.showImageUploadUI ? null :
+          <div>
+            <button onClick={this.doHistogramEqualization} className="standard-btn">Histogram Equalization</button>
+            <button onClick={this.doContrastStretching} className="standard-btn">Contrast Stretching</button>
+            <button onClick={this.doLogCompression} className="standard-btn">Log Compression</button>
+            <button onClick={this.reloadPage} className="standard-btn revert-btn">Upload New Image</button>
+          </div>
+        }
+        {this.state.showImageUploadUI ? <div className="dropzone">
           <Dropzone
           accept=".jpg,.jpeg,.png,.tiff"
           onDrop={this.onDrop.bind(this)}>
-            <p>Try dropping some files here, or click to select files (.jpg, .jpeg, .png, or .tiff) to upload.</p>
+            <p>Drop a file here, or click to select file to upload.</p>
+            <b>required:<br/>(.jpg, .jpeg, .png, or .tiff)</b>
           </Dropzone>
-        </div>
-        <MuiThemeProvider>
-          <ImageTable tableData={this.state.tableData} />
-        </MuiThemeProvider>
-        <aside>
-          <h2>Dropped files</h2>
-          <ul>
-            {
-              this.state.files.map(f => <li key={f.name}><img className="uploaded_img" src={f.base64}></img>
-                                   <br/>
-                                   <span className="og_file_name">{f.name}</span>
-                                   <br/>
-                                   <span className="og_file_size">{f.size} bytes</span>
-                                   <br/>
-                                   <button onClick={this.doHistogramEqualization}>Histogram Equalization</button>
-                                   <br/>
-                                   <img id="edit1" src=""></img>
-                                   <br/>
-                                   <button onClick={this.doContrastStretching}>Contrast Stretching</button>
-                                   <br/>
-                                   <button onClick={this.doLogCompression}>Log Compression</button>
-                                   <br/>
-                                   <button onClick={this.doReverseVideo}>Reverse Video</button>
+        </div> : null }
+        {this.state.showImageUploadUI ? null :
+          <MuiThemeProvider>
+            <ImageTable tableData={this.state.tableData} />
+          </MuiThemeProvider>
+        }
+        </section>
+        // <aside>
+        //   <ul>
+        //     {
+        //       this.state.files.map(f => <li key={f.name}><img className="uploaded_img" src={f.base64}></img>
+        //                            <br/>
+        //                            <span className="og_file_name">{f.name}</span>
+        //                            <br/>
+        //                            <span className="og_file_size">{f.size} bytes</span>
+        //                            <br/>
+        //
+        //                            <br/>
+        //                            <img id="edit1" src=""></img>
+        //                            <br/>
+        //
+        //                            <br/>
+        //
+        //                            <br/>
+        //
+        //                            </li>)
+        //     }
+        //   </ul>
+        // </aside>
 
-                                   </li>)
-            }
-          </ul>
-        </aside>
-      </section>
     );
   }
 }
