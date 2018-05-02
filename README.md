@@ -22,8 +22,30 @@ At this time, mulitple image upload is **NOT** supported. If the user selects mu
 ## Uploading images
 To upload an image, simply click the dropzone or drag an image onto the dropzone: 
 
-SCREENSHOT
+![upload](readme_assets/upload.png)
+
 
 You can also upload a new image at any time by clicking on the `Upload New Image` button: 
 
-SCREENSHOT
+![new_upload](readme_assets/new_upload.png)
+
+## Processing images
+Once you've uploaded an image from your local machine, you can select any of the processes listed above to perform. For Contrast Stretching, you'll be prompted for a range `[min, max]`: 
+
+![end_range](readme_assets/end_range.png)
+
+Once an image process has completed, the result will be displayed along with the original image and any other processes you have completed: 
+
+![processed](readme_assets/processed.png)
+
+Images are dispalyed with:
+* Description - which process was applied to the image
+* Uploaded - date and time when the image was uploaded or the process was completed
+* Time to Process - time each process took in seconds
+* Size - dimensions of the image in pixels
+* File type - file type of the image
+
+## Downloading images
+All images displayed (both original and processed) can be downloaded to your local machine. Simply click on the Download button next to each image: 
+
+![download](readme_assets/download.png)
