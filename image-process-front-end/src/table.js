@@ -12,7 +12,9 @@ import {
 class ImageTable extends React.Component {
   constructor() {
     super();
-
+    this.state = {
+      selectable: false
+    }
   }
 
   downloadImage = (base64, e) => {
@@ -42,8 +44,8 @@ class ImageTable extends React.Component {
 
     return (
       <div>
-      <Table>
-        <TableHeader>
+      <Table selectable={this.state.selectable}>
+        <TableHeader displaySelectAll={this.state.selectable} adjustForCheckbox={this.state.selectable}>
           <TableRow>
             <TableHeaderColumn>Image</TableHeaderColumn>
             <TableHeaderColumn>Description</TableHeaderColumn>
@@ -54,7 +56,7 @@ class ImageTable extends React.Component {
             <TableHeaderColumn>Download</TableHeaderColumn>
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody displayRowCheckbox={this.state.selectable}>
           {prettyTableData}
         </TableBody>
       </Table>
