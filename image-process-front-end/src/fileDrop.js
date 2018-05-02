@@ -38,7 +38,8 @@ class Basic extends React.Component {
         "description": "Original",
         "ts_uploaded": "some date",
         "time_to_process": "N/A",
-        "size": file.size
+        "size": file.size,
+        "type": this.getImageType(file.type)
       }];
       this.setState({
         tableData: newTableData

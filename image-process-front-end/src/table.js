@@ -29,6 +29,7 @@ class ImageTable extends React.Component {
             <TableRowColumn>{this.props.tableData[i]["ts_uploaded"]}</TableRowColumn>
             <TableRowColumn>{this.props.tableData[i]["time_to_process"]}</TableRowColumn>
             <TableRowColumn>{this.props.tableData[i]["size"]}</TableRowColumn>
+            <TableRowColumn>{this.props.tableData[i]["type"]}</TableRowColumn>
             <TableRowColumn><button>Download</button></TableRowColumn>
           </TableRow>
         )
@@ -45,6 +46,7 @@ class ImageTable extends React.Component {
             <TableHeaderColumn>Uploaded</TableHeaderColumn>
             <TableHeaderColumn>Time to Process</TableHeaderColumn>
             <TableHeaderColumn>Size (bytes)</TableHeaderColumn>
+            <TableHeaderColumn>File Type</TableHeaderColumn>
             <TableHeaderColumn>Download</TableHeaderColumn>
           </TableRow>
         </TableHeader>
