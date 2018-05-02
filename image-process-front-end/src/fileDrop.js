@@ -28,6 +28,16 @@ class Basic extends React.Component {
     console.log(file);
     reader.readAsDataURL(file);
     reader.onloadend = (event) => {
+      var img = new Image;
+      img.onload = () => {
+        var originalImage = this.state.tableData;
+        originalImage[0]["size"] = img.width + ' x ' + img.height;
+        this.setState({
+          tableData: [newTableData]
+        })
+      };
+      img.src = reader.result;
+
       file["base64"] = event.target.result;
       file["base64Trim"] = this.removeBase64Header(event.target.result);
       file["uuid"] = this.createUUID();
@@ -35,13 +45,14 @@ class Basic extends React.Component {
         files: files
       });
 
+
       // CRV update the data to display in the results table
       var newTableData = {
         "base_64": event.target.result,
         "description": "Original",
         "ts_uploaded": this.getCurrentTSHumanReadable(),
         "time_to_process": "N/A",
-        "size": file.size,
+        "size": "N/A",
         "type": this.getImageType(file.type, true)
       };
 
@@ -106,8 +117,8 @@ class Basic extends React.Component {
         "base_64": this.createBase64Header(response.data.img_metadata.format) + response.data.img_proc,
         "description": action,
         "ts_uploaded": response.data.img_metadata.time,
-        "time_to_process": "N/A",
-        "size": response.data.img_metadata.img_size,
+        "time_to_process": response.data.img_metadata.proc_time,
+        "size": response.data.img_metadata.img_size[0] + ' x ' + response.data.img_metadata.img_size[1],
         "type": this.getImageType(response.data.img_metadata.format)
       };
 
@@ -230,7 +241,6 @@ class Basic extends React.Component {
         {this.state.showImageUploadUI ? <div className="dropzone">
           <Dropzone
           accept=".jpg,.jpeg,.png,.tiff"
-          multiple="false"
           onDrop={this.onDrop.bind(this)}>
             <p>Drop a file here, or click to select file to upload.</p>
             <b>required:<br/>(.jpg, .jpeg, .png, or .tiff)</b>
