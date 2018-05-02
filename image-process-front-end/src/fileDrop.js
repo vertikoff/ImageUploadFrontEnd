@@ -31,7 +31,7 @@ class Basic extends React.Component {
       var img = new Image;
       img.onload = () => {
         var originalImage = this.state.tableData;
-        originalImage[0]["size"] = img.width + ' x ' + img.height;
+        originalImage[0]["size"] = img.height + ' x ' + img.width;
         this.setState({
           tableData: [newTableData]
         })
