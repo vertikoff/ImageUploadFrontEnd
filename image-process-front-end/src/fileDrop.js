@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
+import ImageTable from './table.js'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class Basic extends React.Component {
   constructor() {
     super()
-    this.state = { files: [] }
+    this.state = {
+      files: [],
+      tableData: []
+     }
   }
 
   onDrop(files) {
@@ -23,6 +28,16 @@ class Basic extends React.Component {
       file["uuid"] = this.createUUID();
       this.setState({
         files
+      });
+      var newTableData = [{
+        "base_64": event.target.result,
+        "description": "Original",
+        "ts_uploaded": "some date",
+        "time_to_process": "N/A",
+        "size": "yuge"
+      }];
+      this.setState({
+        tableData: newTableData
       });
     };
   }
@@ -112,6 +127,9 @@ class Basic extends React.Component {
             <p>Try dropping some files here, or click to select files (.jpg, .jpeg, .png, or .tiff) to upload.</p>
           </Dropzone>
         </div>
+        <MuiThemeProvider>
+          <ImageTable tableData={this.state.tableData} />
+        </MuiThemeProvider>
         <aside>
           <h2>Dropped files</h2>
           <ul>
