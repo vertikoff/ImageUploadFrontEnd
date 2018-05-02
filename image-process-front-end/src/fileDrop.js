@@ -102,17 +102,6 @@ class Basic extends React.Component {
   doProcessing = (dataPayload, action) => {
     console.log(dataPayload);
     axios.post("http://minerva.colab.duke.edu:5000/send_img", dataPayload).then( (response) => {
-			this.fetchImage(dataPayload.img_ID, action);
-		})
-  }
-
-  fetchImage = (uuid, action) => {
-    const postData = {
-      "img_ID": uuid,
-    };
-    console.log(postData);
-    axios.post("http://minerva.colab.duke.edu:5000/view_proc", postData).then( (response) => {
-      console.log(response);
       var newTableData = {
         "base_64": this.createBase64Header(response.data.img_metadata.format) + response.data.img_proc,
         "description": action,
