@@ -9,7 +9,8 @@ class Basic extends React.Component {
     super()
     this.state = {
       files: [],
-      tableData: []
+      tableData: [],
+      showImageUploadUI: true
      }
   }
 
@@ -27,8 +28,10 @@ class Basic extends React.Component {
       file["base64Trim"] = this.removeBase64Header(event.target.result);
       file["uuid"] = this.createUUID();
       this.setState({
-        files
+        files: files
       });
+
+      // CRV update the data to display in the results table
       var newTableData = [{
         "base_64": event.target.result,
         "description": "Original",
@@ -39,6 +42,11 @@ class Basic extends React.Component {
       this.setState({
         tableData: newTableData
       });
+
+      // CRV toggle the retry button and the image upload UI
+      this.setState({
+        showImageUploadUI: false
+      })
     };
   }
 
@@ -116,6 +124,9 @@ class Basic extends React.Component {
   doReverseVideo = () => {
     alert("Reverse Video");
   }
+  reloadPage = () => {
+    window.location.reload();
+  }
 
   render() {
     return (
@@ -124,13 +135,15 @@ class Basic extends React.Component {
         <button onClick={this.doContrastStretching}>Contrast Stretching</button>
         <button onClick={this.doLogCompression}>Log Compression</button>
         <button onClick={this.doReverseVideo}>Reverse Video</button>
-        <div className="dropzone">
+        {this.state.showImageUploadUI ? null : <button onClick={this.reloadPage}>Upload New Image</button>}
+        {this.state.showImageUploadUI ? <div className="dropzone">
           <Dropzone
           accept=".jpg,.jpeg,.png,.tiff"
           onDrop={this.onDrop.bind(this)}>
             <p>Try dropping some files here, or click to select files (.jpg, .jpeg, .png, or .tiff) to upload.</p>
           </Dropzone>
-        </div>
+        </div> : null }
+
         <MuiThemeProvider>
           <ImageTable tableData={this.state.tableData} />
         </MuiThemeProvider>
