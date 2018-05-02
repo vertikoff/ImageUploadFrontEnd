@@ -50,7 +50,7 @@ class ImageTable extends React.Component {
             <TableHeaderColumn>Image</TableHeaderColumn>
             <TableHeaderColumn>Description</TableHeaderColumn>
             <TableHeaderColumn>Uploaded</TableHeaderColumn>
-            <TableHeaderColumn>Time to Process</TableHeaderColumn>
+            <TableHeaderColumn>Time to Process (sec)</TableHeaderColumn>
             <TableHeaderColumn>Size (bytes)</TableHeaderColumn>
             <TableHeaderColumn>File Type</TableHeaderColumn>
             <TableHeaderColumn>Download</TableHeaderColumn>

@@ -106,8 +106,8 @@ class Basic extends React.Component {
         "base_64": this.createBase64Header(response.data.img_metadata.format) + response.data.img_proc,
         "description": action,
         "ts_uploaded": response.data.img_metadata.time,
-        "time_to_process": "N/A",
-        "size": response.data.img_metadata.img_size,
+        "time_to_process": response.data.img_metadata.proc_time,
+        "size": response.data.img_metadata.img_size[0] + ' x ' + response.data.img_metadata.img_size[1] + 'px',
         "type": this.getImageType(response.data.img_metadata.format)
       };
 
