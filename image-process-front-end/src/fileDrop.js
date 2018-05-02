@@ -78,6 +78,11 @@ class Basic extends React.Component {
     return(str.substring(charsToTrim));
   }
 
+  createBase64Header = (fileType) => {
+      var fileType = fileType.replace(/\./g, "");
+      return('data:image/' + fileType + ';base64,');
+  }
+
   doHistogramEqualization = () => {
     console.log('ready to upload base64');
     console.log(this.state.files[0]);
@@ -115,6 +120,16 @@ class Basic extends React.Component {
     console.log(postData);
     axios.post("http://minerva.colab.duke.edu:5000/view_proc", postData).then( (response) => {
       console.log(response);
+      var newTableData = {
+        "base_64": this.createBase64Header(response.data.img_metadata.format) + response.data.img_proc,
+        "description": action,
+        "ts_uploaded": response.data.img_metadata.time,
+        "time_to_process": "N/A",
+        "size": response.data.img_metadata.img_size,
+        "type": this.getImageType(response.data.img_metadata.format)
+      };
+
+      this.addImageToTable(newTableData)
 		})
   }
 
