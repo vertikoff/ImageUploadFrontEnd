@@ -199,7 +199,17 @@ class Basic extends React.Component {
     });
   }
 
+  validateLogCompressionInput = (input) => {
+    if(input == 'dark'){
+      return [false, 'dark enhance'];
+    } else {
+      return [true, 'light enhance'];
+    }
+  }
+
   doLogCompression = () => {
+    var userResponse = prompt("By default, we ehance the light areas of the image. To enhance the dark areas, enter \"dark\".", "light");
+    var lightOrDarkList = this.validateLogCompressionInput(userResponse);
     var uuid = this.createUUID();
     var base64TrimString = this.state.files[0]["base64Trim"];
     var imageType = this.getImageType(this.state.files[0]["type"], true);
@@ -212,13 +222,13 @@ class Basic extends React.Component {
       "img_metadata" : {
         "hist_eq": false,
         "contrast": [30, 100],
-        "log_comp": true,
+        "log_comp": lightOrDarkList[0],
         "reverse": false,
         'format': imageType
       },
       "img_orig": base64TrimString
     };
-    this.doProcessing(postData, "Log Compression");
+    this.doProcessing(postData, "Log Compression (" + lightOrDarkList[1] + ")");
   }
 
   doReverseVideo = () => {
